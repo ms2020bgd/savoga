@@ -36,10 +36,7 @@ def getFirstLink(website):
     if(startWord == ""):
         raise Exception("Program didn't find the startWord!!!!!")
         
-    #sep = "<b>" + startWord + "</b>"
     new_response = response.split(startWord, 1)[1]
-    
-    #new_response=parentWord
 
     new_soup = BeautifulSoup(new_response)
     links = []
@@ -54,9 +51,6 @@ def getFirstLink(website):
 
 
 site = "https://fr.wikipedia.org/wiki/Po%C3%A8me"
-
-#print(getFirstLink(site))
-
 
 site = site.replace("https://fr.wikipedia.org","")
 
