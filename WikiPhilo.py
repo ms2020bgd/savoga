@@ -16,7 +16,7 @@ def getFirstLink(website):
 
     ### RETRIEVE ARTICLE NAME
     title = soup.title.string.split(" Wiki",1)[0]
-    title = re.sub(r'\([^)]*\)', '', title)
+    title = re.sub(r'\([^)]*\)', '', title).replace(" —","")
 
     ### SEARCH FOR THE STARTING WORD (IN BOLD)
     soup_main_bloc = soup.find('div', {'class': 'mw-parser-output'})
@@ -27,7 +27,7 @@ def getFirstLink(website):
         parentWord = str(boldWord.parent)
         if("<p>" in str(boldWord.parent)):
             word = str(boldWord.string)
-            if(similar(word,title) > 0.5):
+            if(similar(word,title) > 0.7):
                 startWord = "<b>"+word+"</b>"+parentWord.split("<b>" + word + "</b>",1)[1][0:5]
                 break
         k+=1
@@ -53,7 +53,7 @@ def getFirstLink(website):
     return links[0]
 
 
-site = "https://fr.wikipedia.org/wiki/Anglais"
+site = "https://fr.wikipedia.org/wiki/Po%C3%A8me"
 
 #print(getFirstLink(site))
 
