@@ -23,7 +23,6 @@ def findCloserMatchVector(col_1, col_2, deg):
     return a
 
 # Following function looks more elegant however it takes much more time to compute
-
 #def findCloserWord(word_0):
 #    words = list(df_2['specialites'].unique())
 #    deg_simil_min = 0.6
@@ -49,6 +48,7 @@ df_2 = df_2[8:]
 df_2 = df_2.rename(columns={"TABLEAU 1. EFFECTIFS DES MÉDECINS par spécialité, mode d'exercice, sexe et tranche d'âge": "specialites"})
 df_2 = df_2.rename(columns = {"Unnamed: 1": "effectif"})
 df_2 = df_2[['specialites','effectif']]
+df_2['effectif'] = df_2['effectif'].astype(float)
 
 a=findCloserMatchVector(list(df_1['l_pre_spe'].unique()), df_2['specialites'], 0.7)
 a["02-Anesthésiologie - Réanimation chirurgicale"]="Anesthésie-réanimation"
@@ -69,5 +69,6 @@ df_1 = df_1.groupby(['spe_2'])['dep_mon'].agg('sum')
 df_1=df_1.reset_index()
 
 df_3 = df_1.join(df_2.set_index('specialites'), on='spe_2')
-
-# 1. Assess the match with the two "spécialité" columns
+df_3.plot(x='spe_2', y='dep_mon', kind='bar', legend=False, figsize=(15, 10))
+df_3.plot(x='spe_2', y='effectif', kind='bar', legend=False, figsize=(15, 10))
+print("la correlation entre les effectifs et le dépassement monétaire est {}".format(df_3['effectif'].corr(df_3['dep_mon'])))
